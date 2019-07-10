@@ -9,10 +9,12 @@ public class PlayerController : MonoBehaviour
     public Text countText;
     public Text winText;
     public Text scoreText;
+    public Text livesText;
 
     private Rigidbody rb;
     private int count;
     private int score;
+    private int lives;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +22,7 @@ public class PlayerController : MonoBehaviour
        rb = GetComponent<Rigidbody>(); 
        count = 0;
        score = 0;
+       lives = 3;
        SetCountText ();
        winText.text = "";
     }
@@ -53,18 +56,24 @@ public class PlayerController : MonoBehaviour
            other.gameObject.SetActive(false);
            count = count + 1;
            score = score - 1;
+           lives = lives - 1;
            SetCountText();
        }
        if (count == 12)
        {
           transform.position = new Vector3(13.7f, transform.position.y,7.66f); 
        }
+       if (lives == 0)
+       {
+           Destroy(this);
+       }
     }
     void SetCountText ()
     {
         countText.text = "Count: " + count.ToString ();
         scoreText.text = "Score: " + score.ToString ();
-        if (score >= 12)
+        livesText.text = "Lives: " + lives.ToString ();
+        if (score >= 18)
         {
             winText.text = "You Win!";
         }
